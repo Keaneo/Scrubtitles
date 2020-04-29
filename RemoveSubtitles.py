@@ -6,7 +6,8 @@ import pytesseract as pt
 from pytesseract import Output
 
 #Read single image
-img = cv2.imread('E:/Media/Videos/Test/frame10.jpg')
+#Change this to the path of the image with subtitles
+img = cv2.imread('image.jpg')
 
 #Main Process
 #Detect subtitles, create mask, inpaint that area
