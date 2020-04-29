@@ -4,6 +4,9 @@ import numpy as np
 import pytesseract as pt
 from pytesseract import Output
 import re 
+import time
+
+start_time = time.time()
 
 def sorted_nicely( l ): 
     """ Sort the given iterable in the way that humans expect.""" 
@@ -31,10 +34,13 @@ while (frame_counter < vid.get(cv2.CAP_PROP_FRAME_COUNT)):
     if not os.path.exists("E:/Media/Videos/Test/frame%d.jpg" % (frame_counter)):
         mask = np.zeros(img.shape, np.uint8)
         recogImg = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-        recogImg = cv2.threshold(recogImg, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)[1]
+        #recogImg = cv2.threshold(recogImg, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)[1]
+        recogImg = cv2.threshold(recogImg, 200, 255, cv2.THRESH_BINARY)[1]
         #recogImg = cv2.GaussianBlur(recogImg, (3,3), 0)
         #recogImg = cv2.medianBlur(recogImg, 9)
-
+        kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (3,3))
+        recogImg = cv2.morphologyEx(recogImg, cv2.MORPH_CLOSE, kernel)
+        recogImg = cv2.dilate(recogImg, kernel, iterations=3)
         #kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (3,3))
         #recogImg = cv2.morphologyEx(recogImg, cv2.MORPH_OPEN, kernel, iterations=1)
         #recogImg = 255 - recogImg
@@ -48,7 +54,8 @@ while (frame_counter < vid.get(cv2.CAP_PROP_FRAME_COUNT)):
                     mask = cv2.rectangle(mask, (x,y), (x+w, y+h), (255,255,255), -1)
                     print(x, y)
                     print(w, h)
-        mask = cv2.cvtColor(mask, cv2.COLOR_BGR2GRAY)
+        mask = recogImg
+        #mask = cv2.cvtColor(mask, cv2.COLOR_BGR2GRAY)
         cleanedImg = cv2.inpaint(img, mask, 3, cv2.INPAINT_TELEA)
         #cv2.imshow("original",img)
         #cv2.imshow("clean", cleanedImg)        
@@ -65,6 +72,7 @@ for image in images:
 
 video.release()
 vid.release()
+print("--- %s seconds ---" % (time.time() - start_time))
 
 #print(subtitlesString) 
 
