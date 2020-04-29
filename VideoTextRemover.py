@@ -15,23 +15,25 @@ def sorted_nicely( l ):
     return sorted(l, key = alphanum_key)
 
 #img = cv2.imread('test.jpg')
-vid = cv2.VideoCapture('E:/Media/Videos/test.mp4')
+#dir = 'E:/Media/Videos/'
+dir = 'C:/Users/liamk/ScrubtitlesFiles/'
+vid = cv2.VideoCapture(os.path.join(dir, 'test.mp4'))
 frame_counter = 0
 
-if not os.path.exists('E:/Media/Videos/Test'):
-    os.mkdir('E:/Media/Videos/Test')
-    print("Directory " , 'E:/Media/Videos/Test' ,  " Created ")
+if not os.path.exists(os.path.join(dir,'Test')):
+    os.mkdir(os.path.join(dir,'Test'))
+    print("Directory " , os.path.join(dir,'Test') ,  " Created ")
 else:    
-    print("Directory " , 'E:/Media/Videos/Test' ,  " already exists")
+    print("Directory " , os.path.join(dir,'Test') ,  " already exists")
 
-os.chdir('E:/Media/Videos/Test')
+os.chdir(os.path.join(dir,'Test'))
 
 while (frame_counter < vid.get(cv2.CAP_PROP_FRAME_COUNT)):
     ret, img = vid.read()
     name = "frame%d.jpg" % (frame_counter)
     if not ret:
         break
-    if not os.path.exists("E:/Media/Videos/Test/frame%d.jpg" % (frame_counter)):
+    if not os.path.exists(os.path.join(dir,"Test/frame%d.jpg" % (frame_counter))):
         mask = np.zeros(img.shape, np.uint8)
         recogImg = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         #recogImg = cv2.threshold(recogImg, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)[1]
@@ -64,7 +66,7 @@ while (frame_counter < vid.get(cv2.CAP_PROP_FRAME_COUNT)):
         #cv2.waitKey(0)
 
 video = cv2.VideoWriter('output.avi', 0, int(vid.get(cv2.CAP_PROP_FPS)), (int(vid.get(cv2.CAP_PROP_FRAME_WIDTH)), int(vid.get(cv2.CAP_PROP_FRAME_HEIGHT))))
-images = [img for img in os.listdir('E:/Media/Videos/Test') if img.endswith(".jpg")]
+images = [img for img in os.listdir(os.path.join(dir,'Test')) if img.endswith(".jpg")]
 images = sorted_nicely(images)
 for image in images:
     print(image)
