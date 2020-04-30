@@ -14,7 +14,7 @@ img = cv2.imread('image.jpg')
 mask = np.zeros(img.shape, np.uint8)
 recogImg = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 recogImg = cv2.threshold(recogImg, 240, 255, cv2.THRESH_BINARY)[1]
-kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (5,5))
+kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (7,5))
 recogImg = cv2.morphologyEx(recogImg, cv2.MORPH_CLOSE, kernel)
 recogImg = cv2.dilate(recogImg, kernel, iterations=3)
 contours, hierarchy = cv2.findContours(recogImg, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
