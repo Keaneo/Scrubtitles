@@ -11,3 +11,8 @@ It is not perfect, but will remove roughly 90-95% of the subtitles with a small 
    - In the case of a video, replace the video_name with the name of your video file.
 4. Open a command window in the scripts directory
 5. Run the appropriate script
+
+<b>Examples</b>
+![Example One](/ExampleImages/ExampleOne.jpg)
+
+![Example Two](/ExampleImages/ExampleTwo.jpg)
