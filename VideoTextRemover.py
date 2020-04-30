@@ -10,6 +10,7 @@ import time
 
 #This is the folder the video will be in, and a subfolder for the temporary processing files.
 dir = 'C:/Videos/' #Place video directory here
+video_name = 'input.mp4' #Place video name here
 
 #Sorts alphanumerically with frame formatting
 def sortedproper( l ):    
@@ -21,7 +22,7 @@ def sortedproper( l ):
 start_time = time.time()
 
 #Video capture
-vid = cv2.VideoCapture(os.path.join(dir, 'test.mp4'))
+vid = cv2.VideoCapture(os.path.join(dir, video_name))
 frame_counter = 0
 
 #Checks if Temp folder exists, if not, make one
