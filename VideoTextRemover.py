@@ -2,8 +2,6 @@
 import cv2
 import os
 import numpy as np
-import pytesseract as pt
-from pytesseract import Output
 import re 
 import time
 
